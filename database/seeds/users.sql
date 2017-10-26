@@ -1,0 +1,1 @@
+INSERT INTO users ('name', 'email', 'password') VALUES ('test_name', 'test_email@example.com', '$2y$10$dbplk84YFDkIEflqKfyBu.GjZptmCXI8IWbiKKdTdIJQcyXqjprmS');

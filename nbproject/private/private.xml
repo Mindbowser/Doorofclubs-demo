@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/var/www/html/laravel_test/resources/views/layouts/app.blade.php</file>
+            <file>file:/var/www/html/laravel_test/app/Postvote.php</file>
+            <file>file:/var/www/html/laravel_test/app/Post.php</file>
+            <file>file:/var/www/html/laravel_test/resources/views/post/index.blade.php</file>
+            <file>file:/var/www/html/laravel_test/app/Http/Controllers/Auth/AuthController.php</file>
+            <file>file:/var/www/html/laravel_test/resources/views/post/create.blade.php</file>
+            <file>file:/var/www/html/laravel_test/database/migrations/2017_10_25_151259_create_post_table.php</file>
+            <file>file:/var/www/html/laravel_test/app/Http/routes.php</file>
+            <file>file:/var/www/html/laravel_test/app/Http/Controllers/PostController.php</file>
+            <file>file:/var/www/html/laravel_test/database/migrations/2017_10_25_151305_create_post_vote_table.php</file>
+            <file>file:/var/www/html/laravel_test/config/app.php</file>
+        </group>
+    </open-files>
+</project-private>
