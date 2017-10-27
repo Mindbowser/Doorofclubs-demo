@@ -12,8 +12,6 @@
 */
 
 Route::get('/', function () { return view('welcome'); });
-Route::get('/greeting', function() { return view('greeting', ['name' => 'James']); });
-Route::get('/myindex', 'MyController@index');
 Route::get('/login', function() { return View::make('login'); });
 
 Route::auth();
@@ -32,10 +30,11 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('/post', 'PostController@index');
 Route::get('/post/create','PostController@create');  
 Route::get('/post/show/{id}','PostController@show');
-Route::get('/post/uppostcount/{id}','PostController@upPostCount');
-Route::get('/post/downpostcount/{id}','PostController@downPostCount');
 Route::post('/post/store','PostController@store');
 Route::get('/post/posts','PostController@posts');
+Route::get('/post/uppostcount/{id}','PostController@upPostCount');
+Route::get('/post/downpostcount/{id}','PostController@downPostCount');
+//Route::resource('/post', 'PostController');
 
 Route::controllers([
    'password' => 'Auth\PasswordController',

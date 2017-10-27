@@ -1,0 +1,89 @@
+COMPOSER INSTALL
+	curl -sS https://getcomposer.org/installer | php;
+	sudo mv composer.phar /usr/local/bin/composer;
+
+APPLICATION CODE
+	cd /var/www/html;
+	git clone https://github.com/Mindbowser/Doorofclubs-demo.git
+    cd inloyal
+
+FOLDER PERMISSIONS
+	sudo chown -R apache storage
+	sudo chown -R apache bootstrap/cache  // if require then only
+
+FOR DEVELOPER (User development branch)
+	git checkout -b development origin/development (development of release branch for staging)
+	git pull origin development
+
+TOOLKIT (SDK/FRAMEWORK) PACKAGES
+	composer install --no-dev (for development without --no-dev option)
+	composer update --no-dev (for development without --no-dev option)
+	NOTE: DEPENDENCIES get installed to vendor/ directory
+
+    //if you create any new class or route then please run bellow command
+    composer dump-autoload
+
+CREATE DATABASE
+	CREATE DATABASE laravel_test DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+CONFIG
+    Create a new file in root ".env"
+    sudo vi .env
+        Add following content in the file
+ 		APP_ENV=local
+		APP_DEBUG=true
+		APP_KEY=base64:fSAQ9Lh88gntTzV2v9sXCvklMyIIV9lvT8TQ5Fl06uU=
+		APP_URL=http://localhost
+
+		DB_CONNECTION=mysql
+		DB_HOST=localhost
+		DB_PORT=3306
+		DB_DATABASE=laravel_test
+		DB_USERNAME=<username>
+		DB_PASSWORD=<password>
+
+		CACHE_DRIVER=file
+		SESSION_DRIVER=file
+		QUEUE_DRIVER=sync
+
+		REDIS_HOST=127.0.0.1
+		REDIS_PASSWORD=null
+		REDIS_PORT=6379
+
+		MAIL_DRIVER=smtp
+		MAIL_HOST=mailtrap.io
+		MAIL_PORT=2525
+		MAIL_USERNAME=null
+		MAIL_PASSWORD=null
+		MAIL_ENCRYPTION=null
+
+            
+ARTISAN COMMANDS
+	Artisian Commands useful to create base database for laravel and migrate schema with seeding data
+
+	php artisan (list available command)
+	php artisan migrate
+	php artisan migrate --seed
+
+	//Following command is used to create a migration class for the tablename.
+	php artisan migrate:make create_tablename_table --create=tablename
+
+        //following command is used to seed a specific seeder file
+        php artisan module:seed admin --class="Modules\Admin\Database\Seeders\<the class name from that seeder file>"
+
+	//for clear artisan cache
+	php artisan cache:clear
+	//Vendor publish command
+	php artisan vendor:publish
+
+	(NOTE : find sql in the database/migrations folder)
+    
+    
+Sequence to Run ARTISAN COMMANDS
+      php artisan migrate
+      php artisan migrate --seed        
+
+RUN IN BROWSER
+      localhost/<project_name>/public/
+
+

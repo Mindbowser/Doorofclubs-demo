@@ -19,7 +19,7 @@ class Post extends Model
      */
     public function profile()
     {
-        return $this->hasOne('App\Users', 'id', 'user_id');
+        return $this->hasOne('App\User', 'id', 'user_id');
     }
     
     /**
@@ -171,11 +171,31 @@ class Post extends Model
      * @return \Illuminate\Http\Response
      */
     public static function upPostCount($id) {
-        $postData = Post::getPostData($id); 
-        $updatedUpCount = $postData['total_up_votes'] + 1;
-        $updatedScore = $updatedUpCount - $postData['total_down_votes'];
+        $postData = Post::getPostData($id);
+        $userId = Auth::user()->id;
+        $voteFlag = 0;
+        $checkUserPostVote = Postvote::checkUserPostVote($id, $userId, $voteFlag);
+        $updatedUpCount = 0;
+        $updatedScore = 0;
+        $updatedDownCount = 0;
         
-        $updatedRows = Post::where('id', $id)->update(['total_up_votes' => $updatedUpCount, 'score'=>$updatedScore]);
+        if(!empty($checkUserPostVote)) {
+            $updatedUpCount = $postData->total_up_votes + 1;
+            $updatedDownCount = $postData->total_down_votes - 1;
+            $updatedScore = $updatedUpCount - $updatedDownCount;
+            
+            //update user post vote
+            $updatedPostVote = Postvote::where('id', $checkUserPostVote['id'])->update(['vote_status' => 1]);
+        } else {
+            $updatedUpCount = $postData->total_up_votes + 1;            
+            $updatedDownCount = $postData->total_down_votes;
+            $updatedScore = $updatedUpCount - $updatedDownCount;
+            $postVoteData = ['_token'=>csrf_token(), 'post_id'=>$id, 'user_id'=>$userId, 'vote_status'=>1];
+            //store post vote status in post_vote table
+            $postVote = Postvote::store($postVoteData);
+        }
+        
+        $updatedRows = Post::where('id', $id)->update(['total_up_votes' => $updatedUpCount, 'total_down_votes' => $updatedDownCount, 'score'=>$updatedScore]);
         return $updatedRows;
     }
     
@@ -186,11 +206,31 @@ class Post extends Model
      * @return \Illuminate\Http\Response
      */
     public static function downPostCount($id) {
-        $postData = Post::getPostData($id); 
-        $updatedDownCount = $postData['total_down_votes'] + 1;
-        $updatedScore = $postData['total_up_votes'] - $updatedDownCount;
+        $postData = Post::getPostData($id);        
+        $userId = Auth::user()->id;
+        $voteFlag = 1;
+        $checkUserPostVote = Postvote::checkUserPostVote($id, $userId, $voteFlag);
+        $updatedUpCount = 0;
+        $updatedScore = 0;
+        $updatedDownCount = 0;
         
-        $updatedRows = Post::where('id', $id)->update(['total_down_votes' => $updatedDownCount, 'score'=>$updatedScore]);
+        if(!empty($checkUserPostVote)) {
+            $updatedUpCount = $postData->total_up_votes - 1;
+            $updatedDownCount = $postData->total_down_votes + 1;
+            $updatedScore = $updatedUpCount - $updatedDownCount;
+            
+            //update user post vote
+            $updatedPostVote = Postvote::where('id', $checkUserPostVote['id'])->update(['vote_status' => 0]);
+        } else {
+            $updatedUpCount = $postData->total_up_votes;            
+            $updatedDownCount = $postData->total_down_votes + 1;
+            $updatedScore = $updatedUpCount - $updatedDownCount;
+            $postVoteData = ['_token'=>csrf_token(), 'post_id'=>$id, 'user_id'=>$userId, 'vote_status'=>0];
+            //store post vote status in post_vote table
+            $postVote = Postvote::store($postVoteData);
+        }
+        
+        $updatedRows = Post::where('id', $id)->update(['total_up_votes' => $updatedUpCount, 'total_down_votes' => $updatedDownCount, 'score'=>$updatedScore]);
         return $updatedRows;
     }
     
@@ -200,9 +240,8 @@ class Post extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public static function getPostData($id) {        
-        $postData = collect(Post::select('total_up_votes', 'total_down_votes', 'score')->where('id', '=', $id)->get());
-        $postData = $postData->toArray();
-        return $postData[0];
+    public static function getPostData($id) {  
+        $postData = Post::findorfail($id);
+        return $postData;        
     }
 }

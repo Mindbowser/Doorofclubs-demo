@@ -11,7 +11,7 @@ $(function(){
             var msg = "Sorry but there was an error: ";
             $('.modal-body').html('<div class="error">' + msg + xhr.status + " " + xhr.statusText + '</div>');      
           }                   
-          $modal.modal('show');                
+          $modal.modal('show');          
         });
     });
     

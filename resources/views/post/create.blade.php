@@ -7,7 +7,7 @@
                 <div class="form-group">
                     <label for="title" class="col-md-4 control-label">Title</label>
                     <div class="col-md-6">
-                        <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" required autofocus>
+                        <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" autofocus required>
                         <div class="help-block">                                
                         </div>
                     </div>
@@ -16,7 +16,7 @@
                 <div class="form-group">
                     <label for="url" class="col-md-4 control-label">Url</label>
                     <div class="col-md-6">
-                        <input id="url" type="text" class="form-control" name="url" value="{{ old('url') }}" required url autofocus>
+                        <input id="url" type="text" class="form-control" name="url" value="{{ old('url') }}" required url>
                         <div class="help-block">                                
                         </div>
                     </div>

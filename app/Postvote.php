@@ -17,7 +17,7 @@ class Postvote extends Model
      */
     public function voterProfile()
     {
-        return $this->hasMany('App\Users', 'id', 'user_id');
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
     
     /**
@@ -40,11 +40,11 @@ class Postvote extends Model
     public static function checkUserPostVote($id, $userId, $voteFlag) {
         $postVoteData = collect(Postvote::select('id')->where('post_id', '=', $id)->where('user_id', '=', $userId)->where('vote_status', '=', $voteFlag)->get());
         $postVoteData = $postVoteData->toArray();
-        
+                
         if(!empty($postVoteData)) {
-           return true;
+           return $postVoteData[0];
         } else {
-           return false;
+           return $postVoteData;
         }
     }
 }

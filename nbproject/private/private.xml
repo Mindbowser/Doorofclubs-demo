@@ -7,12 +7,12 @@
             <file>file:/var/www/html/laravel_test/app/Postvote.php</file>
             <file>file:/var/www/html/laravel_test/app/Post.php</file>
             <file>file:/var/www/html/laravel_test/resources/views/post/index.blade.php</file>
+            <file>file:/var/www/html/laravel_test/public/js/common.js</file>
             <file>file:/var/www/html/laravel_test/app/Http/Controllers/Auth/AuthController.php</file>
             <file>file:/var/www/html/laravel_test/resources/views/post/create.blade.php</file>
-            <file>file:/var/www/html/laravel_test/database/migrations/2017_10_25_151259_create_post_table.php</file>
             <file>file:/var/www/html/laravel_test/app/Http/routes.php</file>
             <file>file:/var/www/html/laravel_test/app/Http/Controllers/PostController.php</file>
-            <file>file:/var/www/html/laravel_test/database/migrations/2017_10_25_151305_create_post_vote_table.php</file>
+            <file>file:/var/www/html/laravel_test/resources/views/post/show.blade.php</file>
             <file>file:/var/www/html/laravel_test/config/app.php</file>
         </group>
     </open-files>

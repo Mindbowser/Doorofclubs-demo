@@ -72,10 +72,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$id)
+    public function show($id)
     {        
-        $post = Post::findOrFail($id);
-        return view('post.show',['post' => $post]);
+        $post = Post::getPostData($id);
+        return view('post.show',['post'=> $post]);
     }
     
     /**
@@ -90,19 +90,19 @@ class PostController extends Controller
         $voteFlag = 1;
         $checkUserPostVote = Postvote::checkUserPostVote($id, $userId, $voteFlag);
         
-        if($checkUserPostVote) {
-            return response()->json(array('status' => 'error','message' => 'Sorry! you have already submitted the vote.'));
-        }
         
-        $postVoteData = ['_token'=>csrf_token(), 'post_id'=>$id, 'user_id'=>$userId, 'vote_status'=>1];
+        if(!empty($checkUserPostVote)) {
+           return response()->json(array('status' => 'error','message' => 'Sorry! you have already submitted the vote.'));
+        } 
+        
+        /*if($checkUserPostVote) {
+            return response()->json(array('status' => 'error','message' => 'Sorry! you have already submitted the vote.'));
+        } */       
         
         //update vote
-        $updatedData = Post::upPostCount($id);
+        $updatedData = Post::upPostCount($id);        
         
-        //store post vote status in post_vote table
-        $postVote = Postvote::store($postVoteData);
-        
-        if(!$postVote)
+        if(!$updatedData)
            return response()->json(array('status' => 'error','message' => 'Something went wrong'));
         else
            return response()->json(array('status' => 'success','message' => 'Thanks, for your vote!'));
@@ -120,19 +120,18 @@ class PostController extends Controller
         $voteFlag = 0;
         $checkUserPostVote = Postvote::checkUserPostVote($id, $userId, $voteFlag);
         
-        if($checkUserPostVote) {
-            return response()->json(array('status' => 'error','message' => 'Sorry! you have already vote to this post.'));
-        }        
+        if(!empty($checkUserPostVote)) {
+           return response()->json(array('status' => 'error','message' => 'Sorry! you have already submitted the vote.'));
+        }
         
-        $postVoteData = ['_token'=>csrf_token(), 'post_id'=>$id, 'user_id'=>$userId, 'vote_status'=>0];
+        /*if($checkUserPostVote) {
+            return response()->json(array('status' => 'error','message' => 'Sorry! you have already vote to this post.'));
+        } */       
         
         //update vote
         $updatedData = Post::downPostCount($id);
-      
-        //store post vote status in post_vote table
-        $postVote = Postvote::store($postVoteData);
         
-        if(!$postVote)
+        if(!$updatedData)
            return response()->json(array('status' => 'error','message' => 'Something went wrong'));
         else
            return response()->json(array('status' => 'success','message' => 'Thanks, for your vote!'));

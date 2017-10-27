@@ -99,7 +99,7 @@
                                 str +="<span class=\"glyphicon glyphicon-thumbs-down\"></span></a></td>";
                             }
                             str +="&nbsp &nbsp";
-                            str +="<td><a class=\"view-detail_row_"+full[5]+" pop-up-modal\" style=\"\" href=\"javascript:void(0)\" data-size=\"modal-md\"  controller_url=\"{{ url('post/show') }}/"+full[5]+"\" >";
+                            str +="<td><a class=\"view-detail_row_"+full[5]+" pop-up-modal\" data-title=\"Post\" style=\"\" href=\"javascript:void(0)\" data-size=\"modal-md\"  controller_url=\"{{ url('post/show') }}/"+full[5]+"\" >";
                             str +="<span class=\"glyphicon glyphicon-eye-open\"></span></a></td>";
                             str +="&nbsp &nbsp";
                             return str;
